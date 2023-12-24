@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "cobblemonxeiplugin",
+  "version": "${version}",
+  "name": "Cobblemon XEI Plugin",
+  "description": "display the cobblemon's information",
+  "authors": [
+    "iouter"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "Insert License Here",
+  "icon": "assets/cobblemonxeiplugin/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.iouter.cobblemonxeiplugin.fabric.CobblemonXEIPluginFabric"
+    ],
+    "jei_mod_plugin": [
+      "com.iouter.cobblemonxeiplugin.jei.JEIPlugin"
+    ]
+  },
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=1.20.1",
+    "architectury": ">=9.1.12",
+    "cobblemon" : ">=1.4.0"
+  }
+}
