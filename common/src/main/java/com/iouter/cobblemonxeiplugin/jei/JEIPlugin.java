@@ -37,16 +37,12 @@ public class JEIPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         List<PokemonSpawnWarpper> spawns = new ArrayList<>();
-        List<PokemonSpawnDetail> pokemonSpawnDetails = new ArrayList<>();
-        for (var a: BestSpawner.INSTANCE.getSpawnerManagers()) {
-            for (var b: a.getSpawners()) {
-                for (var c: b.getSpawnPool().getDetails()) {
-                    if (c instanceof PokemonSpawnDetail d) {
-                        pokemonSpawnDetails.add(d);
-                    }
-                }
+        List<PokemonSpawnDetail> pokemonSpawnDetails = BestSpawner.INSTANCE.getSpawnerManagers().get(0).getSpawners().get(0).getSpawnPool().getDetails().stream().map(s -> {
+            if (s instanceof PokemonSpawnDetail pokemonSpawnDetail) {
+                return pokemonSpawnDetail;
             }
-        }
+            return null;
+        }).toList();
         for (var spawnDetail : pokemonSpawnDetails) {
             if (spawnDetail != null) {
                 Species species = null;

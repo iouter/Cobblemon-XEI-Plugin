@@ -40,12 +40,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -110,6 +108,14 @@ public class PokemonSpawnCategory implements IRecipeCategory<PokemonSpawnWarpper
         } catch (Exception e) {
             return new ResourceLocation("null");
         }
+    }
+
+    public static boolean isArea(double mouseX, double mouseY, int startX, int startY, int serialX, int serialY) {
+        return mouseX >= startX + INTERVAL * serialX && mouseX < startX + INTERVAL * (serialX + 1) && (mouseY >= startY + INTERVAL * serialY && mouseY < startY + INTERVAL * (serialY + 1));
+    }
+
+    public static String manuallyAddZero(int n) {
+        return String.format("%02d", n);
     }
 
     @Override
@@ -201,7 +207,7 @@ public class PokemonSpawnCategory implements IRecipeCategory<PokemonSpawnWarpper
     @Override
     public void draw(PokemonSpawnWarpper recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
         recipe.drawInfo(getBackground().getWidth(), getBackground().getHeight(), graphics, mouseX, mouseY);
-        // render the pokemon and its name, stolen from cobblemon intergents
+        // render the pokemon and its name, copied from cobblemon integrations
         var species = recipe.species;
         var form = recipe.form;
         var spawnDetail = recipe.spawnDetail;
@@ -312,7 +318,7 @@ public class PokemonSpawnCategory implements IRecipeCategory<PokemonSpawnWarpper
 
     @Override
     public @NotNull List<Component> getTooltipStrings(PokemonSpawnWarpper recipe, @NotNull IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
-        List<Component> list= new ArrayList<>();
+        List<Component> list = new ArrayList<>();
         var conditions = recipe.spawnDetail.getConditions();
         if (!conditions.isEmpty()) {
             list.addAll(getSpawnConditionsTooltip(conditions, mouseX, mouseY, 66, 67, "jei.pokemon_spawn.whitelist"));
@@ -325,7 +331,7 @@ public class PokemonSpawnCategory implements IRecipeCategory<PokemonSpawnWarpper
     }
 
     public List<Component> getSpawnConditionsTooltip(List<SpawningCondition<?>> spawningConditions, double mouseX, double mouseY, int startX, int startY, String str) {
-        List<Component> list= new ArrayList<>();
+        List<Component> list = new ArrayList<>();
         int serial;
         String temp;
         boolean area = (mouseX >= startX) && (mouseX < startX + INTERVAL * 6) && ((mouseY >= startY) && (mouseY < startY + INTERVAL * 2));
@@ -347,9 +353,7 @@ public class PokemonSpawnCategory implements IRecipeCategory<PokemonSpawnWarpper
         }
         return list;
     }
-    public static boolean isArea(double mouseX, double mouseY, int startX, int startY, int serialX, int serialY) {
-        return mouseX >= startX + INTERVAL * serialX && mouseX < startX + INTERVAL * (serialX + 1) && (mouseY >= startY + INTERVAL * serialY && mouseY < startY + INTERVAL * (serialY + 1));
-    }
+
     public List<Component> getSpawnConditionTooltip(SpawningCondition<?> spawningCondition, double mouseX, double mouseY, int startX, int startY) {
         List<Component> list = new ArrayList<>();
         if (isArea(mouseX, mouseY, startX, startY, 0, 0)) {
@@ -495,9 +499,5 @@ public class PokemonSpawnCategory implements IRecipeCategory<PokemonSpawnWarpper
             }
         }
         return list;
-    }
-
-    public static String manuallyAddZero(int n) {
-        return n < 10 ? "0" + n : String.valueOf(n);
     }
 }

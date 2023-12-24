@@ -1,10 +1,6 @@
 package com.iouter.cobblemonxeiplugin.util;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TurnedCondition {
     private static int nowCondition = 0;
